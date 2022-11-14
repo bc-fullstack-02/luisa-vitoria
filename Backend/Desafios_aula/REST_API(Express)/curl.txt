@@ -1,0 +1,10 @@
+CURL
+
+POST:
+curl -H "Content-Type: application/json" -X POST http://localhost:4000/posts -d "{\"Name\":\"Test Value\"}"
+
+PUT:
+curl -X PUT -H "Content-Type: application/json" http://localhost:4000/posts/:id -d "{\"id\": 1, \"body\": \"teste\"}"
+
+DELETE:
+curl -X DELETE http://localhost:4000/posts/:id
