@@ -1,0 +1,920 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Social Networking API",
+    "description": "API for a social networking using NodeJS and MongoDB."
+  },
+  "host": "localhost:5000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "JWT": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "description": "Bearer ",
+      "in": "header"
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/posts/{postId}/comments": {
+      "get": {
+        "tags": [
+          "Comment"
+        ],
+        "description": "This endpoint gets comments by a post.",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Post Id."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Comments successfully obtained."
+          },
+          "404": {
+            "description": "Post not found."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Comment"
+        ],
+        "description": "This endpoint post a comment.",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Post Id."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Comment"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Comment successfully created."
+          },
+          "404": {
+            "description": "Post not found."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/v1/posts/{postId}/comments/{id}": {
+      "get": {
+        "tags": [
+          "Comment"
+        ],
+        "description": "This endpoint gets a comment by id.",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Post Id."
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Comment Id."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Comment successfully obtained."
+          },
+          "404": {
+            "description": "Post or comment not found."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Comment"
+        ],
+        "description": "This endpoint updates a comment by id.",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Post Id."
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Comment Id."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Comment"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Comment successfully updated."
+          },
+          "404": {
+            "description": "Post or comment not found."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Comment"
+        ],
+        "description": "This endpoint deletes a comment by id.",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Post Id."
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Comment Id."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Comment successfully deleted."
+          },
+          "404": {
+            "description": "Post or comment not found."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/v1/posts/{postId}/comments/{id}/like": {
+      "post": {
+        "tags": [
+          "Comment"
+        ],
+        "description": "This endpoint likes a comment.",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Post Id."
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Comment Id. "
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Comment successfully liked."
+          },
+          "404": {
+            "description": "Post or comment not found."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/v1/posts/": {
+      "get": {
+        "tags": [
+          "Post"
+        ],
+        "description": "This endpoint gets all posts by me.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Posts successfully obtained."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Post"
+        ],
+        "description": "This endpoint posts a post.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Post"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Posts successfully created."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/v1/posts/{id}": {
+      "get": {
+        "tags": [
+          "Post"
+        ],
+        "description": "This endpoint gets a post by id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Post Id."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Posts successfully obtained."
+          },
+          "404": {
+            "description": "Posts not found."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Post"
+        ],
+        "description": "This endpoint updates a post by id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Post Id."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Post"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Posts successfully obtained."
+          },
+          "404": {
+            "description": "Posts not found."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Post"
+        ],
+        "description": "This endpoint deletes a post by id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Post Id."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Posts successfully deleted."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/v1/posts/{id}/like": {
+      "post": {
+        "tags": [
+          "Post"
+        ],
+        "description": "This endpoint likes a post.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Post Id."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Post successfully liked."
+          },
+          "404": {
+            "description": "Post not found."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/v1/user/me": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "This endpoint gets my user.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User successfully obtained."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "description": "This endpoint updates my user.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User successfully updated."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "description": "This endpoint deletes my user.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User successfully deleted."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/v1/profiles/": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "description": "This endpoint lists all profiles.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Profiles successfully obtained."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/v1/profiles/search": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "description": "This endpoint searches a profile.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "type": "string",
+            "description": "query parameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Profile successfully obtained."
+          },
+          "404": {
+            "description": "Profile not found."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/v1/profiles/{id}": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "description": "This endpoint gets a profile by id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Profile Id."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Profile successfully obtained."
+          },
+          "404": {
+            "description": "Profile not found."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/v1/profiles/{id}/follow": {
+      "post": {
+        "tags": [
+          "Profile"
+        ],
+        "description": "This endpoint follow a profile by id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Profile Id."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Profile successfully followed."
+          },
+          "404": {
+            "description": "Profile not found."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/v1/feed/": {
+      "get": {
+        "tags": [
+          "Feed"
+        ],
+        "description": "This endpoint lists all posts.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Posts successfully obtained."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/v1/security/login": {
+      "post": {
+        "tags": [
+          "Security"
+        ],
+        "description": "This endpoint signs the user in.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Login"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User successfully connected."
+          },
+          "401": {
+            "description": "Invalid password or user."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      }
+    },
+    "/v1/security/register": {
+      "post": {
+        "tags": [
+          "Security"
+        ],
+        "description": "This endpoint creates a user.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Registry"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User successfully created."
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "string",
+          "example": "john10"
+        },
+        "password": {
+          "type": "string",
+          "example": "Password123456*"
+        },
+        "profile": {
+          "$ref": "#/definitions/Profile"
+        }
+      },
+      "required": [
+        "user",
+        "password"
+      ]
+    },
+    "Login": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "string",
+          "example": "john10"
+        },
+        "password": {
+          "type": "string",
+          "example": "Password123456*"
+        }
+      },
+      "required": [
+        "user",
+        "password"
+      ]
+    },
+    "Registry": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "string",
+          "example": "john"
+        },
+        "password": {
+          "type": "string",
+          "example": "Password123456*"
+        },
+        "name": {
+          "type": "string",
+          "example": "John Mark"
+        }
+      },
+      "required": [
+        "user",
+        "password"
+      ]
+    },
+    "Profile": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "John Mark"
+        },
+        "user": {
+          "type": "string",
+          "example": "john10"
+        },
+        "followers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Profile"
+          }
+        },
+        "following": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Profile"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "user"
+      ]
+    },
+    "Post": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "This is a title of a post..."
+        },
+        "description": {
+          "type": "string",
+          "example": "This is a description of a post..."
+        },
+        "profile": {
+          "$ref": "#/definitions/Profile"
+        },
+        "comments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Comment"
+          }
+        },
+        "likes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Profile"
+          }
+        }
+      },
+      "required": [
+        "title",
+        "description",
+        "profile"
+      ]
+    },
+    "Comment": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "example": "This is a description of a comment..."
+        },
+        "profile": {
+          "$ref": "#/definitions/Profile"
+        },
+        "post": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Post"
+          }
+        },
+        "likes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Profile"
+          }
+        }
+      },
+      "required": [
+        "description",
+        "profile",
+        "post"
+      ]
+    }
+  }
+}

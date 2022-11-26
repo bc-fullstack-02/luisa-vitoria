@@ -1,0 +1,30 @@
+version: '2.12'
+services:
+
+  mongodb:
+    image: mongo:latest
+    container_name: 'mongodb'
+    ports: 
+      - 27017:27017
+    networks:
+      - mynet
+
+  
+  backend:
+    restart: always
+    build: 
+      context: ./
+    volumes:
+      - .:/src 
+    depends_on:
+      - mongodb
+    env_file:
+      - ./.env
+    ports:
+      - 4000:4000
+    networks:
+      - mynet
+
+networks:
+  mynet:
+    driver: bridge
