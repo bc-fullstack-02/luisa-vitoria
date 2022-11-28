@@ -20,6 +20,10 @@ services:
       - mongodb
     env_file:
       - ./.env
+    environment:
+      - MONGO_HOSTNAME=mongodb
+      - MONGO_PORT=$MONGO_PORT
+      - MONGO_DB=$MONGO_DB 
     ports:
       - 4000:4000
     networks:

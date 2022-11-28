@@ -6,7 +6,7 @@ const doc = {
         title: "Social Networking API",
         description: "API for a social networking using NodeJS and MongoDB."
     },
-    host: `localhost:5000`,
+    host: `localhost:4000`,
     basePath: "/",
     schemes: ["http"],
     consumes: ["application/json"],

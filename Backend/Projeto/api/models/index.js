@@ -1,10 +1,19 @@
 const mongoose = require('mongoose')
+const {
+  MONGO_HOSTNAME,
+  MONGO_PORT,
+  MONGO_DB
+} = process.env;
 
-const connect = mongoose.connect(`${process.env.MONGO_DB || 'mongodb://localhost:27017/rest-api'}`, {
+const url = `mongodb://${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}`
+
+//`${process.env.MONGO_DB || 'mongodb://localhost:27017/rest-api'}`
+
+const connect = mongoose.connect(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
-console.log(`Successfully connected to database ${process.env.MONGO_DB}`);
+console.log(`Successfully connected to database ${url}`);
 
 exports.Post = require('./post.js')
 exports.Comment = require('./comment.js')
