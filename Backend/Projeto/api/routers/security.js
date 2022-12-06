@@ -4,7 +4,7 @@ const router = express.Router()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { User, Profile } = require('../models')
-const ACCESS_TOKEN_SECRET = 'accesstoken'
+
 
 router
     .route('/login')
@@ -33,7 +33,7 @@ router
             }
         */
 
-        .then(() => User.findOne({ user: req.body.user}))
+        .then(() => User.findOne({ user: req.body.user }))
         .then(user => user ? bcrypt.compare(req.body.password, user.password) : next(createError(404)))
         .then(passHashed => passHashed ? jwt.sign(req.body.user, process.env.JWT_SECRET) : next(createError(401)))
         .then(accessToken => res.status(200).json({ accessToken }))

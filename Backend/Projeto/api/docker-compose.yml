@@ -1,4 +1,4 @@
-version: '2.12'
+version: '3.8'
 services:
 
   mongodb:
@@ -6,6 +6,20 @@ services:
     container_name: 'mongodb'
     ports: 
       - 27017:27017
+    volumes:
+      - ./db/:/data/db
+    networks:
+      - mynet
+
+  rabbitmq:
+    image: rabbitmq:3.8-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/raabitmq/log/:/var/log/rabbitmq
     networks:
       - mynet
 
@@ -18,12 +32,12 @@ services:
       - .:/src 
     depends_on:
       - mongodb
-    env_file:
-      - ./.env
+      - rabbitmq
     environment:
-      - MONGO_HOSTNAME=mongodb
-      - MONGO_PORT=$MONGO_PORT
-      - MONGO_DB=$MONGO_DB 
+      PORT: 4000
+      AMQP_URL: amqp://guest:guest@rabbitmq:5672
+      MONGO_URL: mongodb://mongodb:27017/sysmap_api
+      JWT_SECRET: "accesstoken"
     ports:
       - 4000:4000
     networks:

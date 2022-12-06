@@ -8,9 +8,12 @@ const createError = require('http-errors')
 const swaggerUi = require("swagger-ui-express")
 const swaggerFile = require("./swagger_output.json")
 const jwt = require('jsonwebtoken')
+const pubsub = require('./pubsub')
 
-
+//import routers
 const { Post, Comment, User, Security, Profile, Feed} = require('./routers')
+
+//import models
 const { User: UserModel, Connection} = require('./models')
 
 //instantiate express
@@ -45,6 +48,9 @@ function authenticateToken(req, res, next) {
     })
 }
 
+app.use('/static', express.static(path.join(__dirname, 'public')))
+
+app.use(pubsub.pub)
 //Database Connection
 app.use((req, res, next) => Promise.resolve()
     .then(() => Connection.then())
@@ -89,7 +95,7 @@ app.use(function (error, req, res, next) {
     // error page
     res.status(error.status || 500).json({
         url: req.originalUrl,
-        error
+        error: 'internal error'
     })
   }
 })
