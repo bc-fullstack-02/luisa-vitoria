@@ -1,13 +1,4 @@
 const mongoose = require('mongoose')
-// const {
-//   MONGO_HOSTNAME,
-//   MONGO_PORT,
-//   MONGO_DB
-// } = process.env;
-
-// const url = `mongodb://${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}`
-
-//`${process.env.MONGO_DB || 'mongodb://localhost:27017/rest-api'}`
 
 const connect = mongoose.connect(`${process.env.MONGO_URL || 'mongodb://localhost:27017/sysmap-api'}`, {
       useNewUrlParser: true,
