@@ -1,5 +1,5 @@
 const Rascal = require('rascal')
-const defaultConfig = require('./config')
+const defaultConfig = require("../config.json")
 
 defaultConfig.vhosts['/'].connection.url = process.env.AMQP_URL || defaultConfig.vhosts['/'].connection.url
 
@@ -25,5 +25,26 @@ module.exports = {
             })
         })
         next()
+    }),
+    sub: () => Promise.resolve(Rascal.withDefaultConfig(config))
+    .then((conf) => new Promise((resolve, reject) => Rascal.Broker.create(conf, (err, broker) => {
+        if(err) {
+            if(err.code === 'ECONNREFUSED') {
+                console.log(err)
+                process.exit(1)
+            } else {
+                reject(err)
+            }
+        }
+        resolve(broker)
+    })))
+    .then(broker => new Promise((resolve, reject) => broker.subscribe(consumer, (err, subscription) => {
+        if(err) reject(err)
+        resolve(subscription)
+    })))
+    .then(subscription => {
+        subscription.on('error', err => { throw err })
+        subscription.on('cancel', err => { throw err })
+        return subscription
     })
 }

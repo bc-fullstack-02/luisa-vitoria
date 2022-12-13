@@ -6,5 +6,12 @@ FROM base as dev
 
 RUN npm install
 COPY ./* ./
-CMD ["npm", "start"]
+
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.9.0/wait /wait
+RUN chmod +x /wait
+
+ENTRYPOINT [ "npm" ]
+
+CMD [ "run", "start:docker" ]
+
 

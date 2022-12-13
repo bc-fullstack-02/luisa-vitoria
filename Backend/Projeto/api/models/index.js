@@ -9,8 +9,11 @@ const mongoose = require('mongoose')
 
 //`${process.env.MONGO_DB || 'mongodb://localhost:27017/rest-api'}`
 
-const connect = mongoose.connect(`${process.env.MONGO_URL || 'mongodb://localhost:27017/api-sysmap'}`)
-console.log(`Successfully connected to database ${process.env.MONGO_URL || 'mongodb://localhost:27017/api-sysmap'}`);
+const connect = mongoose.connect(`${process.env.MONGO_URL || 'mongodb://localhost:27017/sysmap-api'}`, {
+      useNewUrlParser: true,
+      dbName: 'sysmap-api', 
+    })
+console.log(`Successfully connected to database ${process.env.MONGO_URL || 'mongodb://localhost:27017/sysmap-api'}`);
 
 exports.Post = require('./post.js')
 exports.Comment = require('./comment.js')

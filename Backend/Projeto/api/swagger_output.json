@@ -25,6 +25,13 @@
     "application/json"
   ],
   "paths": {
+    "/v1/seed": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
     "/v1/posts/{postId}/comments": {
       "get": {
         "tags": [
@@ -63,7 +70,7 @@
         "tags": [
           "Comment"
         ],
-        "description": "This endpoint post a comment.",
+        "description": "This endpoint posts a comment.",
         "parameters": [
           {
             "name": "postId",
@@ -296,37 +303,6 @@
             "JWT": []
           }
         ]
-      },
-      "post": {
-        "tags": [
-          "Post"
-        ],
-        "description": "This endpoint posts a post.",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "obj",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Post"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Posts successfully created."
-          }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
       }
     },
     "/v1/posts/{id}": {
@@ -461,6 +437,37 @@
           },
           "404": {
             "description": "Post not found."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/v1/posts": {
+      "post": {
+        "tags": [
+          "Post"
+        ],
+        "description": "This endpoint posts a post.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Post"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Posts successfully created."
           }
         },
         "security": [

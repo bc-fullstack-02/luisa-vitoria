@@ -1,16 +1,14 @@
 const createError = require('http-errors')
 const express = require('express')
 const router = express.Router()
-const { Post, Connection } = require('../models')
-
+const { Post } = require('../models')
+const upload = require('../lib/upload')
 
 router
     .route('/')
     .get((req, res, next) => Promise.resolve()
-
         // #swagger.tags = ['Post']
         // #swagger.description = 'This endpoint gets all posts by me.'
-
         /* 
             #swagger.security = [{
                 "JWT": []
@@ -21,36 +19,19 @@ router
                 description: 'Posts successfully obtained.',
             }
         */
-
-        .then(() => Post.find({profile: req.user.profile._id}).populate('comments').populate('profile')) 
-        .then(data => res.status(200).json(data))
-        .catch(err => next(err))
+    .then(() => Post.find({profile: req.user.profile._id}).populate('comments').populate('profile')) 
+    .then(data => res.status(200).json(data))
+    .catch(err => next(err))
     )
-    .post((req, res, next) => Promise.resolve()
-        // #swagger.tags = ['Post']
-        // #swagger.description = 'This endpoint posts a post.'
-        /* 
-            #swagger.parameters['obj'] = {
-                in: 'body',
-                required: true,
-                schema: { $ref: "#/definitions/Post" }
-            }   
-        */
 
-        /* 
-            #swagger.security = [{
-                "JWT": []
-            }]
-        */
-        /* 
-            #swagger.responses[201] = {
-                description: 'Posts successfully created.',
-            }
-        */
-        .then(() => new Post({...req.body, profile: req.user.profile._id}).save())
-        .then(data => res.status(201).json(data))
-        .catch(err => next(err))
-    )
+    .post(upload.concat([(req, res, next) => Promise.resolve()
+        // #swagger.ignore = true
+    .then(() => new Post({...req.body, profile: req.user.profile._id}).save())
+    .then(args => req.publish('post', req.user.profile.followers, args) )
+    .then(data => res.status(201).json(data))
+    .catch(err => next(err))
+    ]))
+    
 
 router
     .route('/:id')
@@ -58,7 +39,6 @@ router
         // #swagger.tags = ['Post']
         // #swagger.description = 'This endpoint gets a post by id.'
         // #swagger.parameters['id'] = { description: "Post Id." }
-
         /* 
             #swagger.security = [{
                 "JWT": []
@@ -72,9 +52,9 @@ router
                 description: 'Posts not found.',
             }
         */
-        .then(() => Post.findById(req.params.id).populate('comments').populate('profile'))
-        .then(data => data ? res.status(200).json(data) : next(createError(404)))
-        .catch(err => next(err))
+    .then(() => Post.findById(req.params.id).populate('comments').populate('profile'))
+    .then(data => data ? res.status(200).json(data) : next(createError(404)))
+    .catch(err => next(err))
     )
     .put((req, res, next) => Promise.resolve()
         // #swagger.tags = ['Post']
@@ -101,9 +81,9 @@ router
                 description: 'Posts not found.',
             }
         */
-        .then(() => Post.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true }))
-        .then(data => res.status(200).json(data))
-        .catch(err => next(err))
+    .then(() => Post.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true }))
+    .then(data => res.status(200).json(data))
+    .catch(err => next(err))
     )
     .delete((req, res, next) => Promise.resolve()
         // #swagger.tags = ['Post']
@@ -121,9 +101,9 @@ router
             }
         */
 
-        .then(() => Post.deleteOne({ _id: req.params.id }))
-        .then(data => res.status(200).json(data))
-        .catch(err => next(err))
+    .then(() => Post.deleteOne({ _id: req.params.id }))
+    .then(data => res.status(200).json(data))
+    .catch(err => next(err))
     )
 
 router
@@ -146,9 +126,42 @@ router
                 description: 'Post not found.',
             }
         */
-        .then(() => Post.findByIdAndUpdate((req.params.id), { $push: { likes: req.user.profile._id } }, { new: true, runValidators: true }))
-        .then(data => data ? res.status(200).json(data) : next(createError(404)))
-        .catch(err => next(err))
+    .then(() => Post.findByIdAndUpdate((req.params.id), { $push: { likes: req.user.profile._id } }, { new: true, runValidators: true }))
+    .then(args => req.publish('post-like', [args.profile._id], args))
+    .then(data => data ? res.status(200).json(data) : next(createError(404)))
+    .catch(err => next(err))
     )
+
+function createPostEndpoint() {
+    // #swagger.start
+
+    /*
+        #swagger.path = '/v1/posts'
+        #swagger.method = 'post'
+        #swagger.description = 'This endpoint posts a post.'
+        #swagger.tags = ['Post']
+        #swagger.produces = ['application/json']
+    */
+    
+    /*   
+        #swagger.parameters['obj'] = {
+            in: 'body',
+            required: true,
+            schema: { $ref: "#/definitions/Post" }
+        }   
+    */
+    /* 
+        #swagger.security = [{
+            "JWT": []
+        }]
+    */
+    /* 
+        #swagger.responses[201] = {
+            description: 'Posts successfully created.',
+        }
+    */
+    // #swagger.end
+}
+createPostEndpoint()
 
 module.exports = router

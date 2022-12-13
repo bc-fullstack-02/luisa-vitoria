@@ -1,6 +1,35 @@
 version: '3.8'
 services:
 
+  minio:
+    image: bitnami/minio
+    ports:
+      - 9000:9000
+      - 9001:9001
+    environment:
+      MINIO_ROOT_USER: minio-root-user
+      MINIO_ROOT_PASSWORD: minio-root-password
+      MINIO_SERVER_HOST: localhost
+      MINIO_SCHEME: http
+      MINIO_API_CORS_ALLOW_ORIGIN: '*'
+    networks:
+      - mynet
+
+  mc:
+    image: minio/mc
+    container_name: mc
+    network_mode: host
+    depends_on: 
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc config host add --api s3v2 minio http://localhost:9000/ minio-root-user minio-root-password;
+      /usr/bin/mc rm -r --force minio/first-bucket;
+      /usr/bin/mc mb -p minio/first-bucket;
+      /usr/bin/mc policy set public minio/first-bucket;
+      /usr/bin/mc admin trace minio -a --debug;
+      "
+
   mongodb:
     image: mongo:latest
     container_name: 'mongodb'
@@ -23,7 +52,6 @@ services:
     networks:
       - mynet
 
-  
   backend:
     restart: always
     build: 
@@ -33,11 +61,17 @@ services:
     depends_on:
       - mongodb
       - rabbitmq
+      - minio
     environment:
       PORT: 4000
       AMQP_URL: amqp://guest:guest@rabbitmq:5672
       MONGO_URL: mongodb://mongodb:27017/sysmap_api
       JWT_SECRET: "accesstoken"
+      BUCKET_HOST: http://localhost:9000/
+      BUCKET_ENDPOINT: http://minio:9000/
+      BUCKET_ACCESS_KEY: minio-root-user
+      BUCKET_SECRET_KEY: minio-root-password
+      WAIT_HOSTS: mongodb:27017, rabbitmq:5672, minio:9000
     ports:
       - 4000:4000
     networks:
