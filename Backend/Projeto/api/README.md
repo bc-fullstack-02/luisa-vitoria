@@ -82,6 +82,7 @@ As seguintes ferramentas foram usadas na construção da API:
 - [MongoDB](https://www.mongodb.com/)
 - [JSONWebToken](https://jwt.io/)
 - [MinIO](https://min.io/)
+- [RabbitMQ](https://rabbitmq.com/)
 - [Swagger](https://swagger.io/)
 
   
