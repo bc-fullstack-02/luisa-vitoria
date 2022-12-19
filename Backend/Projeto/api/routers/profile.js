@@ -19,7 +19,7 @@ router
                 description: 'Profiles successfully obtained.',
             }
         */
-    .then(() => Profile.find({})) 
+    .then(() => Profile.find({ $nor: [ { user: req.user.profile._id } ]})) 
     .then(data => res.status(200).json(data))
     .catch(err => next(err))
     )
@@ -98,8 +98,8 @@ router
                 description: 'Profile not found.',
             }
         */
-    .then(() => Profile.findByIdAndUpdate((req.params.id), { $push: { followers: req.user.profile._id } }, { new: true, runValidators: true }))
-    .then(profile => profile ? Profile.findByIdAndUpdate((req.user.profile._id), { $push: { following: req.params.id } }, { new: true, runValidators: true }) : next(createError(404)))
+    .then(() => Profile.findByIdAndUpdate((req.params.id), { $addToSet: { followers: req.user.profile._id } }, { new: true, runValidators: true }))
+    .then(profile => profile ? Profile.findByIdAndUpdate((req.user.profile._id), { $addToSet: { following: req.params.id } }, { new: true, runValidators: true }) : next(createError(404)))
     .then(profile => [profile, req.params.id])
     .then(([profile, profileId]) => req.publish('follow', [profileId], profile))
     .then(data => res.status(200).json(data))

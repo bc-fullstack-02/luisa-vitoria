@@ -27,10 +27,13 @@ router
     .post(upload.concat([(req, res, next) => Promise.resolve()
         // #swagger.ignore = true
     .then(() => new Post({...req.body, profile: req.user.profile._id}).save())
+    .then(post => post.populate({ path: 'profile', populate: { path: 'user' }})) 
     .then(args => req.publish('post', req.user.profile.followers, args) )
     .then(data => res.status(201).json(data))
     .catch(err => next(err))
     ]))
+
+    //.populate({ path: 'profile', populate: { path: 'user' }}))
     
 
 router
@@ -126,7 +129,7 @@ router
                 description: 'Post not found.',
             }
         */
-    .then(() => Post.findByIdAndUpdate((req.params.id), { $push: { likes: req.user.profile._id } }, { new: true, runValidators: true }))
+    .then(() => Post.findByIdAndUpdate((req.params.id), { $addToSet: { likes: req.user.profile._id } }, { new: true, runValidators: true }))
     .then(args => req.publish('post-like', [args.profile._id], args))
     .then(data => data ? res.status(200).json(data) : next(createError(404)))
     .catch(err => next(err))

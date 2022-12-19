@@ -177,7 +177,7 @@ router
                 description: 'Post or comment not found.',
             }
         */
-    .then(() => Comment.findByIdAndUpdate((req.params.id), { $push: { likes: req.user.profile._id } }, { new: true, runValidators: true }).populate('likes'))
+    .then(() => Comment.findByIdAndUpdate((req.params.id), { $addToSet: { likes: req.user.profile._id } }, { new: true, runValidators: true }).populate('likes'))
     .then(args => req.publish('comment-like', [args.profile], args))
     .then(data => res.status(200).json(data))
     .catch(err => next(err))

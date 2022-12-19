@@ -33,7 +33,7 @@ router
         */
     .then(() => User.findOne({ user: req.body.user }))
     .then(user => user ? bcrypt.compare(req.body.password, user.password) : next(createError(404)))
-    .then(passHashed => passHashed ? User.findOne({ user: req.body.user }, '-password') : next(createError(401)))
+    .then(passHashed => passHashed ? User.findOne({ user: req.body.user }, '-password').populate('profile', 'name') : next(createError(401)))
     .then(user => jwt.sign(JSON.stringify(user), JWT_SECRET))
     .then(accessToken => res.status(200).json({ accessToken }))
     .catch(err => next(err))

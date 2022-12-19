@@ -39,3 +39,8 @@ module.exports = [upload.single("file"), (req, res, next) => {
 ]
 
 
+// .then(() => {
+//         req.body.image = true
+//         req.body.description = `${process.env.BUCKET_HOST || config.endpoint}${bucketName}/${filename}`
+//         return next()
+//       })
