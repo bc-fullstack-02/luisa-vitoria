@@ -1,15 +1,19 @@
-
-import AuthForm from "../../Components/AuthForm"
+import { useNavigate } from "react-router-dom"
+import AuthForm, { Auth } from "../../Components/AuthForm"
 import api from "../../services/api"
 
 function SignUp() {
+    const navigate = useNavigate()
 
-    async function handleRegister(user: string, password: string) {
-        const data = await api.post('/security/register', {
-            user,
-            password
-        })
-        console.log(data)
+    async function handleRegister(auth: Auth) {
+        console.log(auth)
+        try {
+            await api.post('/security/register', auth)
+
+            return navigate("/")
+        } catch(err) {
+            console.log(err)
+        }
     }
 
     return (
@@ -19,6 +23,7 @@ function SignUp() {
             linkDescription="Já possui conta? Entre agora!"
             submitFormButtonAction={handleRegister}
             routeName="/"
+            showNameInput
         />
     )
 }

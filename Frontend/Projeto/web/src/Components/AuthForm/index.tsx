@@ -10,21 +10,45 @@ import { Link } from 'react-router-dom'
 import { FormEvent } from "react"
 
 interface AuthFormProps {
-    formTitle: string,
-    submitFormButton: string,
-    linkDescription: string,
-    submitFormButtonAction: (user: string, password: string) => {}
-    routeName: string
+    formTitle: string;
+    submitFormButton: string;
+    linkDescription: string;
+    submitFormButtonAction: (auth: Auth) => {};
+    routeName: string;
+    showNameInput?: boolean;
 }
 
-function AuthForm({formTitle, submitFormButton, linkDescription, submitFormButtonAction ,routeName} : AuthFormProps) {
+interface AuthFormElements extends HTMLFormControlsCollection {
+    name?: HTMLInputElement;
+    user: HTMLInputElement;
+    password: HTMLInputElement;
+}
 
-    function handleSubmit(event: FormEvent) {
+interface AuthFormElement extends HTMLFormElement {
+    readonly elements: AuthFormElements;
+}
+
+export interface Auth {
+    name?: string;
+    user: string;
+    password: string;
+}
+
+function AuthForm({formTitle, submitFormButton, linkDescription, submitFormButtonAction , routeName, showNameInput} : AuthFormProps) {
+
+    function handleSubmit(event: FormEvent<AuthFormElement>) {
         event.preventDefault()
+        const form = event.currentTarget
 
-        const form = event.target as HTMLFormElement
-        submitFormButtonAction(form.elements.user.value, form.elements.password.value)
+        
+        
+        const auth = {
+            name: form.elements.name?.value,
+            user: form.elements.user.value,
+            password: form.elements.password.value
+        }
 
+        submitFormButtonAction(auth)
     }
 
     return (
@@ -35,16 +59,26 @@ function AuthForm({formTitle, submitFormButton, linkDescription, submitFormButto
                 <Text size="md" className="mt-1 text-gray-500">{formTitle}</Text>
             </header>
 
-            <form onSubmit={e => handleSubmit(e)} className="mt-10 flex flex-col gap-4 items-stretch w-full max-w-sm">
-                <label htmlFor="user" className="flex flex-col gap-1">
-                    <Text className="text-gray-100" size="md">Login</Text>
+            <form onSubmit={handleSubmit} className=" mt-10 flex flex-col gap-4 items-stretch w-full max-w-sm">
+                {showNameInput && (
+                    <label htmlFor="name" className=" flex flex-col gap-1">
+                        <Text size="md">Nome</Text>
+                        <TextInput.Root>
+                            <TextInput.Icon><User /></TextInput.Icon>
+                            <TextInput.Input type="text" id="name" placeholder="Digite seu nome"></TextInput.Input>
+                        </TextInput.Root>
+                    </label>
+                )}
+                
+                <label htmlFor="user" className=" flex flex-col gap-1">
+                    <Text size="md">Login</Text>
                     <TextInput.Root>
                         <TextInput.Icon><User /></TextInput.Icon>
                         <TextInput.Input type="text" id="user" placeholder="Digite seu login"></TextInput.Input>
                     </TextInput.Root>
                 </label>
-                <label htmlFor="password" className="flex flex-col gap-1">
-                    <Text className="text-gray-100" size="md">Senha</Text>
+                <label htmlFor="password" className=" flex flex-col gap-1">
+                    <Text size="md">Senha</Text>
                     <TextInput.Root>
                         <TextInput.Icon><Lock /></TextInput.Icon>
                         <TextInput.Input type="password" id="password" placeholder="*******"></TextInput.Input>

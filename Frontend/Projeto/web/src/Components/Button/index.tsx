@@ -14,7 +14,7 @@ function Button({asChild, children, className, ...props}: ButtonProps) {
     return (
         <Comp 
         className={clsx(
-            "py-3 bg-cyan-500 rounded font-semibold text-black text-sm w-full transition-colors hover:bg-cyan-300 focus:ring-2 ring-white",className 
+            "py-2  bg-gradient-to-r from-secondaryLight via-secondary to-secondaryDark hover:bg-gradient-to-br rounded-xl font-semibold text-black text-md w-full transition-colors  focus:ring-2 ring-secondary", className 
             )} 
             {...props}>
             {children}
