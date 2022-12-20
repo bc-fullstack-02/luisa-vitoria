@@ -1,11 +1,11 @@
-import Menu from "../../Components/Menu";
+import NavBar from "../../Components/NavBar";
 import Profiles from "../../Components/Profiles";
 
 function Friends() {
 
     return (
         <div className="w-screen h-screen flex">
-            <Menu />
+            <NavBar />
             <Profiles />
         </div>
     )

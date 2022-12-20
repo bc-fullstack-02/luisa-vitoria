@@ -6,6 +6,7 @@ import Text from "../Text"
 import { getAuthHeader } from "../../services/auth"
 import { Post } from "../../Model/Post"
 import PostItem from "../PostItem"
+import Header from "../Header"
 
 interface FeedProps {
     posts: Post[];
@@ -15,24 +16,34 @@ interface FeedProps {
 function Feed({posts, handleLike}: FeedProps) {
     const user = localStorage.getItem('user')
     const name = localStorage.getItem('name')
-   
-   
+    const profileId = localStorage.getItem('profile')
+    const authHeader = getAuthHeader()
 
-   console.log(posts)
+    const [profile, setProfile] = useState<{[key: string]: any}>({})
+
+    const getProfile = async () => {
+        try {
+            const response = await api.get(`/profiles/${profileId}`, authHeader)
+            setProfile(response.data)
+        } catch(err) {
+            console.error(err)
+        }
+    }
+
+    useEffect(() => {
+        getProfile()
+    }, [])
+
     
     return (
         <div className="basis-5/6 overflow-y-auto scrool-smooth">
-            <header className="px-5 py-3 border-b border-lineBg flex items-center ">
-                <UserCircle size={40} weight='light' fill="" />
-                <Heading size="xs" className="ml-2">{name}</Heading>
-                <Heading  className="ml-2 text-sm">{`@${user}`}</Heading>
-            </header>
+            <Header profileImage={profile.image} profileUrlImage={profile.urlImage} />
 
             <main>
                 {posts && 
                     posts.slice(0).reverse().map((post: Post) => (
                         
-                       <PostItem post={post} handleLike={handleLike} />
+                       <PostItem key={post._id} post={post} handleLike={handleLike} />
                 ))}
             </main>
             

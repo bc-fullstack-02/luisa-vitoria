@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import api from "../../services/api";
-import { UserCircle } from "phosphor-react";
+import { UserCircle, UsersFour } from "phosphor-react";
 import Heading from "../Heading";
 import Button from "../Button";
 import { getAuthHeader } from "../../services/auth";
@@ -9,12 +9,16 @@ interface Profile {
     _id: string;
     name: string;
     followers: string[];
+    followButtonDisabled: boolean;
+    user: {
+        user: string
+    }
 }
 
 function Profiles() {
     const user = localStorage.getItem('user')
     const name = localStorage.getItem('name')
-    const profileId = localStorage.getItem('profile')
+    const profileUserId = localStorage.getItem('profile') as string
     const authHeader = getAuthHeader()
 
     const [profiles, setProfiles] = useState<Profile[]>([])
@@ -32,12 +36,20 @@ function Profiles() {
         getProfiles()
     }, [])
 
-    console.log(profiles)
 
     async function handleFollow(profileId: string) {
         try {
             await api.post(`/profiles/${profileId}/follow`, null, authHeader)
-            getProfiles()
+
+            setProfiles((profiles) => {
+                const newProfiles = profiles.map((profile) => {
+                    if(profile._id === profileId){
+                        profile.followers.includes(profileUserId) ? '' : profile.followers.push(profileUserId) 
+                    }
+                    return profile
+                })
+                return [...newProfiles]
+            })
         } catch(err) {
             console.error(err)
         }
@@ -46,7 +58,17 @@ function Profiles() {
     async function handleUnfollow(profileId: string) {
         try {
             await api.post(`/profiles/${profileId}/unfollow`, null, authHeader)
-            getProfiles()
+
+            setProfiles((profiles) => {
+                const newProfiles = profiles.map((profile) => {
+                    if(profile._id === profileId){
+                        const index = profile.followers.indexOf(profileUserId)
+                        profile.followers.splice(index, 1)
+                    }
+                    return profile
+                })
+                return [...newProfiles]
+            })
         } catch(err) {
             console.error(err)
         }
@@ -56,20 +78,19 @@ function Profiles() {
     return (
         <div className="basis-5/6 overflow-y-auto scrool-smooth">
             <header className="px-5 py-3 border-b border-lineBg flex items-center ">
-                <UserCircle size={40} weight='light' fill="" />
-                <Heading size="xs" className="ml-2">{name}</Heading>
-                <Heading  className="ml-2 text-sm">{`@${user}`}</Heading>
+                <UsersFour size={32} weight='light' fill=""  />
+                <Heading size="xs" className="ml-2">Amigos</Heading>
             </header>
             {profiles.map(profile => (
                 <section className=" flex flex-col gap-2 px-5 py-3 border-b border-lineBg hover:bg-hoverBg" key={profile._id}>
                     <header className="flex items-center mr-2">
                         <UserCircle size={40} weight='light' fill="" />
                         <Heading size="xs" className="ml-2">{profile.name}</Heading>
-                        {/* <Heading  className="ml-2 text-sm">{`@${profile.user.user}`}</Heading> */}
+                        <Heading  className="ml-2 text-sm">{`@${profile.user.user}`}</Heading>
                     </header>
                     <div>
                         
-                        {profile.followers.includes(profileId) === true ? 
+                        {profile.followers.includes(profileUserId) ? 
                             <div className="flex items-center gap-3">
                                 <button onClick={() => handleFollow(profile._id)} className="w-40  bg-lineBg py-2 rounded-xl font-semibold text-md  focus:ring-2 ring-secondary hover:opacity-80" disabled >
                                     Seguir

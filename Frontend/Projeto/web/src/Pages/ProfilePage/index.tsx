@@ -1,10 +1,10 @@
 import Profile from "../../Components/Profile";
-import Menu from "../../Components/Menu";
+import NavBar from "../../Components/NavBar";
 
 function ProfilePage() {
     return (
         <div className="w-screen h-screen flex">
-            <Menu />
+            <NavBar />
             <Profile />
         </div>
        

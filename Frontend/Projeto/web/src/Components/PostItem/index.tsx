@@ -11,11 +11,12 @@ interface PostItemProps {
 
 function PostItem({post, handleLike}: PostItemProps) {
     const profile = localStorage.getItem('profile')
+    console.log(post)
     
     return (
-        <section className="px-5 py-3 border-b border-lineBg  flex flex-col gap-2 hover:bg-hoverBg" key={post._id}>
+        <section className="px-5 py-3 border-b border-lineBg  flex flex-col gap-2 hover:bg-hoverBg">
             <header className="flex items-center">
-                <UserCircle size={40} weight='light' fill="" />
+                {post.profile.image ? <img src={post.profile.urlImage} className='h-12 w-12 rounded-full' /> :  <UserCircle size={48} weight='light' fill="" />}
                 <Heading size="xs" className="ml-2">{post.profile.name}</Heading>
                 <Heading  className="ml-2 text-sm">{`@${post.profile.user.user}`}</Heading>
             </header>
@@ -24,14 +25,15 @@ function PostItem({post, handleLike}: PostItemProps) {
                 <p>{post.title}</p>
             </Text>
 
-            {post.image ? (
-                <img src={post.description} alt="Foto" className="max-w-xs rounded-lg ml-2" />
-            ) : (
-                <Text asChild size="sm" className="pl-2">
+            <Text asChild size="sm" className="pl-2">
                     <p>{post.description}</p>
                 </Text>
-            )}
-        
+
+            {post.image && (
+                <img src={post.urlImage} alt="Foto" className="max-w-xs rounded-lg ml-2" />
+                
+            )} 
+
             <div className="flex items-center gap-6 pl-2">
                 <div className="flex items-center gap-1">
                     <div onClick={() => handleLike(post._id)}>

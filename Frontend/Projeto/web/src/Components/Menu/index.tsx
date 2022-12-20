@@ -6,6 +6,7 @@ import Text from "../Text";
 import logo_menu from "../../assets/parrot_menu.svg"
 import CreatePostButton from '../../Components/CreatePostButton';
 import CreatePostDialog from '../../Components/CreatePostDialog';
+import NavBar from '../NavBar';
 import { Post } from '../../Model/Post'
 
 interface MenuProps {
@@ -21,33 +22,15 @@ function Menu(props: MenuProps) {
     }
 
     return (
-        <div className="basis-1/6 pt-4 bg-primaryDark">
-            <header className="flex items-center py-2 ml-8 ">
-                <img src={logo_menu}  alt="Logo Sysmap Parrot" />
-                <Text size="2xl" className="font-extrabold ml-4 text-textOnP tracking-wider">Parrot</Text>
-            </header> 
-
-            <nav>
-                <ul>
-                    <MenuItem route='/home' menuTitle="Home">
-                        <HouseSimple size={32} weight="fill" />
-                    </MenuItem>
-                    <MenuItem route='/profile' menuTitle="Perfil">
-                        <User size={32} weight="fill"/>
-                    </MenuItem>
-                    <MenuItem route='/friends' menuTitle="Amigos">
-                        <UsersThree size={32} weight="fill"/>
-                    </MenuItem>
-                </ul> 
-            </nav> 
-
-            <Dialog.Root open={open} onOpenChange={setOpen}>
+        <>
+            <NavBar>
+                <Dialog.Root open={open} onOpenChange={setOpen}>
                 <CreatePostButton />
 
                 <CreatePostDialog postCreated={postCreated} />
-            </Dialog.Root>
-                
-        </div>
+                </Dialog.Root>
+            </NavBar> 
+        </>
     )
 }
 

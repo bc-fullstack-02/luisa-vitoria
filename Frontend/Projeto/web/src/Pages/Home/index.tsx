@@ -11,12 +11,12 @@ function Home() {
 
     const [posts, setPosts] = useState<Post[]>([])
 
-    useEffect(() => {
-        async function getPosts() {
-            const response = await api.get('/feed', authHeader)
+    async function getPosts() {
+        const response = await api.get('/feed', authHeader)
+        setPosts(response.data)
+    }
 
-            setPosts(response.data)
-        }
+    useEffect(() => {
         getPosts()
     }, [])
 
@@ -38,14 +38,11 @@ function Home() {
         } catch(err) {
             console.error(err)
         }
-       
     }
 
     function newPostCreated(post: Post) {
-        setPosts(posts => [post, ...posts])
+        setPosts(posts => [...posts, post])
     }
-
-    console.log(posts)
    
     return (
         <div className="w-screen h-screen flex">

@@ -7,6 +7,7 @@ import { TextInput } from '../TextInput'
 import Button from '../Button'
 import Dropzone from '../Dropzone'
 import { Post } from '../../Model/Post'
+import ImageUpload from '../ImageUpload'
 
 interface CreatePostDialogProps {
     postCreated: (post: Post) => void
@@ -16,6 +17,8 @@ function CreatePostDialog({ postCreated }: CreatePostDialogProps) {
 
     const token = localStorage.getItem('accessToken')
     const [selectedFile, setSelectedFile] = useState<File>()
+
+
 
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
@@ -64,7 +67,7 @@ function CreatePostDialog({ postCreated }: CreatePostDialogProps) {
                         </label>
                         <TextInput.Input id='description' placeholder='Digite o que está pensando...' className='text-md text-gray-300 text-textOnP bg-transparent outline-none' />
 
-                        <Dropzone onFileUploaded={setSelectedFile} />
+                        <Dropzone  onFileUploaded={setSelectedFile} />
                     </div>
 
                     <footer className='mt-7 flex justify-end gap-4'>
