@@ -2,6 +2,7 @@ const createError = require('http-errors')
 const express = require('express')
 const router = express.Router()
 const { Profile } = require('../models')
+const upload = require('../lib/upload')
 
 router
     .route('/')
@@ -19,7 +20,7 @@ router
                 description: 'Profiles successfully obtained.',
             }
         */
-    .then(() => Profile.find({ $nor: [ { user: req.user.profile._id } ]})) 
+    .then(() => Profile.find({ $nor: [ { user: req.user._id } ]}).populate('user'))
     .then(data => res.status(200).json(data))
     .catch(err => next(err))
     )
@@ -78,6 +79,14 @@ router
     .then(data => data ? res.status(200).json(data) : next(createError(404)))
     .catch(err => next(err))
     )
+
+    .patch(upload.concat([(req, res, next) => Promise.resolve()
+    .then(() => Profile.updateOne({_id: req.params.id}, { $set: req.body }))
+    .then(() => Profile.findById(req.params.id).populate(['following', 'followers']))
+    .then(data => data ? res.status(200).json(data) : next(createError(404)))
+    .catch(err => next(err))])
+    )
+
 
 router
     .route('/:id/follow')

@@ -22,7 +22,7 @@ const { User: UserModel, Connection} = require('./models')
 const app = express()
 
 app.use(cors())
-// app.use(helmet()) //uncomment in frontend
+app.use(helmet()) //uncomment in frontend
 
 //instantiate swagger
 app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile))

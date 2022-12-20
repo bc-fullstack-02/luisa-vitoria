@@ -18,7 +18,15 @@ const profileSchema = new Schema({
   followers: [{
     type: Schema.Types.ObjectId,
     ref: 'Profile'
-  }]
+  }],
+  image: {
+    type: Boolean,
+    default: false
+  },
+  urlImage: {
+    type: String,
+    default: ''
+  }
 })
 profileSchema.index({ name: 'text' })
 module.exports = model('Profile', profileSchema)
