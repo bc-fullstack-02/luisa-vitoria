@@ -92,7 +92,7 @@ router
     .route('/:id/follow')
     .post((req, res, next) => Promise.resolve()
         // #swagger.tags = ['Profile']
-        // #swagger.description = 'This endpoint follow a profile by id.'
+        // #swagger.description = 'This endpoint follows a profile by id.'
         // #swagger.parameters['id'] = { description: "Profile Id." }
         /* 
             #swagger.security = [{
@@ -117,6 +117,22 @@ router
 
 router
     .route('/:id/unfollow')
+        // #swagger.tags = ['Profile']
+        // #swagger.description = 'This endpoint unfollows a profile by id.'
+        // #swagger.parameters['id'] = { description: "Profile Id." }
+        /* 
+            #swagger.security = [{
+                "JWT": []
+            }]
+        */
+        /* 
+            #swagger.responses[200] = {
+                description: 'Profile successfully unfollowed.',
+            }
+            #swagger.responses[404] = {
+                description: 'Profile not found.',
+            }
+        */
     .post((req, res, next) => Promise.resolve()
     .then(() => Profile.findByIdAndUpdate((req.params.id), { $pull: { followers: req.user.profile._id } }, { new: true, runValidators: true }))
     .then(profile => profile ? Profile.findByIdAndUpdate((req.user.profile._id), { $pull: { following: req.params.id } }, { new: true, runValidators: true }) : next(createError(404)))

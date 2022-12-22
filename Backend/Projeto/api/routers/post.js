@@ -55,7 +55,7 @@ router
                 description: 'Posts not found.',
             }
         */
-    .then(() => Post.findById(req.params.id).populate('comments').populate('profile'))
+    .then(() => Post.findById(req.params.id).populate('comments').populate({ path: 'profile', populate: { path: 'user' }}))
     .then(data => data ? res.status(200).json(data) : next(createError(404)))
     .catch(err => next(err))
     )
@@ -131,6 +131,32 @@ router
         */
     .then(() => Post.findByIdAndUpdate((req.params.id), { $addToSet: { likes: req.user.profile._id } }, { new: true, runValidators: true }))
     .then(args => req.publish('post-like', [args.profile._id], args))
+    .then(data => data ? res.status(200).json(data) : next(createError(404)))
+    .catch(err => next(err))
+    )
+
+router
+    .route('/:id/unlike')
+    .post((req, res, next) => Promise.resolve()
+        // #swagger.tags = ['Post']
+        // #swagger.description = 'This endpoint unlikes a post.'
+        // #swagger.parameters['id'] = { description: "Post Id." }
+
+        /* 
+            #swagger.security = [{
+                "JWT": []
+            }]
+        */
+        /* 
+            #swagger.responses[200] = {
+                description: 'Post successfully unliked.',
+            }
+            #swagger.responses[404] = {
+                description: 'Post not found.',
+            }
+        */
+    .then(() => Post.findByIdAndUpdate((req.params.id), { $pull: { likes: req.user.profile._id } }, { new: true, runValidators: true }))
+    // .then(args => req.publish('post-unlike', [args.profile._id], args))
     .then(data => data ? res.status(200).json(data) : next(createError(404)))
     .catch(err => next(err))
     )
