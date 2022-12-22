@@ -28,6 +28,23 @@
 O projeto é uma rede social, onde o usuário pode postar fotos ou textos e interagir com outros usuários, através de curtidas e comentários.
 
 - ##### Tela de cadastro:
+![Tela de cadastro](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Frontend/Projeto/web/src/assets/cadastro.png)
+
+
+- ##### Tela de login:
+![Tela de login](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Frontend/Projeto/web/src/assets/login.png)
+
+- ##### Tela de home/feed:
+![Tela de home](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Frontend/Projeto/web/src/assets/feed.png)
+
+- ##### Tela de perfil:
+![Tela de perfil](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Frontend/Projeto/web/src/assets/perfil.png)
+
+- ##### Tela de amigos:
+![Tela de amigos](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Frontend/Projeto/web/src/assets/amigos.png)
+
+- ##### Tela de comentários:
+![Tela de amigos](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Frontend/Projeto/web/src/assets/postdetail.png)
 
 
 
