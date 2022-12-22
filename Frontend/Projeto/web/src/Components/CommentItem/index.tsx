@@ -78,7 +78,7 @@ function CommentItem({postId, newComment}: CommentItemProps) {
                         }
                         <div>
                             <Heading size="xs" className="ml-2">{comment.profile.name}</Heading>
-                            <Heading  className="ml-2 text-sm">{`@${comment.profile.user.user}`}</Heading>
+                            <Heading size="xxs" className="ml-2 text-sm">{`@${comment.profile.user.user}`}</Heading>
                         </div>
                     </header>
 

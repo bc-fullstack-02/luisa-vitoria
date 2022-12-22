@@ -6,7 +6,7 @@ function CreatePostButton() {
     return (
         <>
         <div className=' ml-4 mr-4 hidden sm:block'>
-            <Dialog.Trigger className='py-2 px-4 md:mt-6 mb-2 w-full  rounded-2xl font-semibold text-lg bg-gradient-to-r from-secondaryLight via-secondary to-secondaryDark hover:bg-gradient-to-br'>
+            <Dialog.Trigger className='py-2 px-4 md:mt-6 mb-2 mr-2 w-full  rounded-2xl font-semibold text-lg bg-gradient-to-r from-secondaryLight via-secondary to-secondaryDark hover:bg-gradient-to-br'>
             Novo Post
             </Dialog.Trigger>
         </div>

@@ -1,5 +1,6 @@
 import { useState } from 'react'
-
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import * as Dialog from '@radix-ui/react-dialog'
 import { FormEvent } from 'react'
 import api from '../../services/api'
@@ -43,11 +44,31 @@ function CreatePostDialog({ postCreated }: CreatePostDialogProps) {
                     Authorization: `Bearer ${token}`
                 }
             })
+
+            if(response.status === 201) {
+                toast.success("Post realizado com sucesso!", {
+                    position: "top-right",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
+
             postCreated(response.data)
 
         } catch(err) {
             console.error(err)
-            alert('erro')
+            toast.error("Ops! Ocorreu algum erro... (Preencha os campos)", {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+            });
         }
     }
 

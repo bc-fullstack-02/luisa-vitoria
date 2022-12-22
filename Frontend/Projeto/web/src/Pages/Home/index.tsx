@@ -6,6 +6,7 @@ import Menu from '../../Components/Menu';
 import Feed from '../../Components/Feed';
 import { Post } from "../../Model/Post"
 
+
 function Home() {
     const profile = localStorage.getItem('profile') as string
     const authHeader = getAuthHeader()
@@ -14,6 +15,7 @@ function Home() {
 
     async function getPosts() {
         const response = await api.get('/feed', authHeader)
+        
         setPosts(response.data)
     }
 

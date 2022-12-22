@@ -4,6 +4,7 @@ import { getAuthHeader } from "../../services/auth"
 import { Post } from "../../Model/Post"
 import PostItem from "../PostItem"
 import Header from "../Header"
+import Heading from "../Heading"
 
 interface FeedProps {
     posts: Post[];
@@ -35,6 +36,11 @@ function Feed({posts, handleLike}: FeedProps) {
             <Header className="fixed top-0 left-0 right-0" profileImage={profile.image} profileUrlImage={profile.urlImage} />
 
             <main>
+                {posts.length === 0 && 
+                    <div className="px-6 py-6">
+                        <Heading size="sm">Faça um post e novas amizades!</Heading>
+                    </div> 
+                }
                 {posts && 
                     posts.slice(0).reverse().map((post: Post) => (
                        <PostItem key={post._id} post={post} handleLike={handleLike} />

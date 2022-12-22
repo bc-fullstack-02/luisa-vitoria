@@ -22,7 +22,7 @@ function PostItem({post, handleLike}: PostItemProps) {
                 }
                 <div>
                     <Heading size="xs" className="ml-2">{post.profile.name}</Heading>
-                    <Heading  className="ml-2 text-sm">{`@${post.profile.user.user}`}</Heading>
+                    <Heading size="xxs" className="ml-2 text-sm">{`@${post.profile.user.user}`}</Heading>
                 </div>
                 
             </header>
@@ -40,7 +40,7 @@ function PostItem({post, handleLike}: PostItemProps) {
                 
 
                 {post.image && (
-                    <img src={post.urlImage} alt="Foto" className="max-w-sm rounded-lg mt-3" />
+                    <img src={post.urlImage} alt="Foto" className="max-w-xs sm:max-w-sm rounded-lg mt-3" />
                     
                 )} 
             </Link>

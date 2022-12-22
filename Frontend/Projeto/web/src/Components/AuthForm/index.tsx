@@ -9,6 +9,8 @@ import { User, Lock } from 'phosphor-react'
 import { Link } from 'react-router-dom'
 import { FormEvent } from "react"
 
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 interface AuthFormProps {
     formTitle: string;
@@ -103,14 +105,14 @@ function AuthForm({formTitle, submitFormButton, linkDescription, submitFormButto
     }
 
     return (
-        <div className="text-cyan-50 flex flex-col items-center mt-14">
+        <div className="text-cyan-50 flex flex-col items-center mt-10">
             <header className="flex flex-col items-center" >
                 <img src={logo} alt="Parrot" />
                 <Heading size="lg"> Sysmap Parrot </Heading>
                 <Text size="md" className="mt-1 text-gray-500">{formTitle}</Text>
             </header>
 
-            <form onSubmit={handleSubmit} className=" mt-10 flex flex-col gap-4 items-stretch w-full max-w-sm">
+            <form onSubmit={handleSubmit} className=" mt-10 flex flex-col gap-3 items-stretch w-full max-w-sm">
                 {showNameInput && (
                     <label htmlFor="name" className=" flex flex-col gap-1">
                         <Text size="md">Nome</Text>
@@ -127,7 +129,8 @@ function AuthForm({formTitle, submitFormButton, linkDescription, submitFormButto
                         <TextInput.Icon><User /></TextInput.Icon>
                         <TextInput.Input value={inputValues.user} onChange={(event) => handleChange(event)} type="text" id="user" name="user" placeholder="Digite seu login" required></TextInput.Input>
                     </TextInput.Root>
-                    {validation.user !== "" && (
+                    
+                    {showNameInput && validation.user !== "" && (
                         <p className="text-xs text-primaryDark">{validation.user}</p>
                     )}
                 </label>
@@ -137,7 +140,7 @@ function AuthForm({formTitle, submitFormButton, linkDescription, submitFormButto
                         <TextInput.Icon><Lock /></TextInput.Icon>
                         <TextInput.Input value={inputValues.password} onChange={(event) => handleChange(event)} type="password" id="password" name="password" placeholder="*******" required></TextInput.Input>
                     </TextInput.Root>
-                    {validation.password !== "" && (
+                    {showNameInput && validation.password !== "" && (
                         <p className="text-xs text-primaryDark">{validation.password}</p>
                     )}
                 </label>
@@ -145,7 +148,7 @@ function AuthForm({formTitle, submitFormButton, linkDescription, submitFormButto
 
             </form>
 
-            <footer className=" flex flex-col items-center gap-4 mt-8">
+            <footer className=" flex flex-col items-center gap-4 mt-3">
                 <Text asChild size="sm">
                     <Link className=" text-gray-500 underline hover:text-gray-200"
                         to={routeName} 
@@ -154,6 +157,7 @@ function AuthForm({formTitle, submitFormButton, linkDescription, submitFormButto
                     </Link>
                 </Text>
             </footer>
+            
         </div>
        
     )

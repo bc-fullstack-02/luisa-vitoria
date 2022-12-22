@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
@@ -23,6 +25,7 @@ function Profile() {
         try {
             const response = await api.get(`/profiles/${profileId}`, authHeader)
             setProfile(response.data)
+
         } catch(err) {
             console.error(err)
         }
@@ -51,9 +54,30 @@ function Profile() {
             console.log(response)
             setProfile({...response.data})
 
+            if(response.status === 200) {
+            toast.success("Foto alterada com sucesso!", {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+            });
+            }
+
         } catch(err) {
             console.error(err)
-            alert('erro')
+            toast.error("Ops! Ocorreu algum erro...", {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+
+            });
         }
     };
 
@@ -68,7 +92,7 @@ function Profile() {
             <Header  profileImage={profile.image} profileUrlImage={profile.urlImage} />
 
             {Object.keys(profile).length !== 0 && (
-                <div className="flex flex-col gap-3 items-center m-auto mt-10 px-5 py-5 w-1/3 rounded-2xl bg-primaryDark text-textOnP">
+                <div className="flex flex-col gap-3 items-center m-auto mt-10 px-5 py-5 w-1/2 md:w-2/5 lg:w-1/3 rounded-2xl bg-primaryDark text-textOnP">
                  
                     {profile.image ? <img src={profile.urlImage} style={{width: '200px', height: '200px', borderRadius: '50%', verticalAlign:'middle'}} /> : <UserCircle size={48} />}
 

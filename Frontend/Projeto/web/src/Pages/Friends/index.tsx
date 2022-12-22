@@ -4,7 +4,7 @@ import Profiles from "../../Components/Profiles";
 function Friends() {
 
     return (
-        <div className="w-screen h-screen flex">
+        <div className="w-screen h-screen md:flex md:flex-row">
             <NavBar />
             <Profiles />
         </div>

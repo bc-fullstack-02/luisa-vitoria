@@ -13,6 +13,8 @@ interface Profile {
     user: {
         user: string
     }
+    image: boolean;
+    urlImage: string;
 }
 
 function Profiles() {
@@ -79,12 +81,19 @@ function Profiles() {
                 <UsersFour size={32} weight='light' fill=""  />
                 <Heading size="xs" className="ml-2">Amigos</Heading>
             </header>
-            {profiles.map(profile => (
+            {profiles.slice(0).reverse().map(profile => (
                 <section className=" flex flex-col gap-2 px-5 py-3 border-b border-lineBg hover:bg-hoverBg" key={profile._id}>
                     <header className="flex items-center mr-2">
-                        <UserCircle size={40} weight='light' fill="" />
+                        {profile.image ? 
+                            <img src={profile.urlImage} className='h-12 w-12 rounded-full' /> 
+                            :  
+                            <UserCircle size={48} weight='light' fill="" />
+                        }
                         <Heading size="xs" className="ml-2">{profile.name}</Heading>
-                        <Heading  className="ml-2 text-sm">{`@${profile.user.user}`}</Heading>
+                        {profile.user && (
+                            <Heading size="xxs" className="ml-2 text-sm">{`@${profile.user.user}`}</Heading>
+                        )}
+                        
                     </header>
                     <div>
                         

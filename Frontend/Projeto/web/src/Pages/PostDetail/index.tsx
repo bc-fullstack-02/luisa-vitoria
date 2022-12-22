@@ -75,7 +75,7 @@ function PostDetail() {
     }
 
     return (
-        <div className="w-screen h-screen flex">
+        <div className="w-screen h-screen md:flex md:flex-row">
             <NavBar />
 
             <div className="basis-5/6 overflow-y-auto scrool-smooth">
