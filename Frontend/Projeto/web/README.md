@@ -48,15 +48,15 @@ O projeto é uma rede social, onde o usuário pode postar fotos ou textos e inte
 - ##### Tela de comentários:
 ![Tela de amigos](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Frontend/Projeto/web/src/assets/postdetail.png)
 
-##O projeto é responsivo e possui notificações toast
+### O projeto é responsivo e possui notificações toast
+
+![gif](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Frontend/Projeto/web/src/assets/notificacoes.gif)
 
 - ##### Telas responsivas:
 ![Tela de feed responsiva](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Frontend/Projeto/web/src/assets/feed_responsivo.png) 
 
------
 
 ![Tela de perfil responsiva](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Frontend/Projeto/web/src/assets/perfil_responsivo.png)
-
 
 
 ------------
