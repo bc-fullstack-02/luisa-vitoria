@@ -1,4 +1,4 @@
-<h1 align="center"> Front-end  -  Sysmap Parrot </h1>
+ <h1 align="center"> :sparkles: Front-end  -  Sysmap Parrot </h1>
 <h4 align="center"> Projeto front-end para a rede social Sysmap Parrot </h4>
 <h6 align="center"></H6React>React + TailwindCSS + Vite.Js</h6>
 
@@ -26,6 +26,7 @@
 
 ### 🎲 Visualizando a Aplicação
 O projeto é uma rede social, onde o usuário pode postar fotos ou textos e interagir com outros usuários, através de curtidas e comentários.
+
 
 - ##### Tela de cadastro:
 ![Tela de cadastro](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Frontend/Projeto/web/src/assets/cadastro.png)
