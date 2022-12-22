@@ -16,7 +16,9 @@ function TextInputRoot(props: TextInputRootProps) {
 
 interface TextInputInputProps extends InputHTMLAttributes<HTMLInputElement> {}
 
+
 function TextInputInput(props: TextInputInputProps) {
+  
     return (
         <input 
         className="bg-transparent flex-1 text-textOnP text-sm placeholder:text-textOnP outline-none" {...props}

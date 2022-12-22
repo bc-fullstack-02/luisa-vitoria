@@ -7,20 +7,25 @@ import { TextInput } from '../TextInput'
 import Button from '../Button'
 import Dropzone from '../Dropzone'
 import { Post } from '../../Model/Post'
-import ImageUpload from '../ImageUpload'
 
 interface CreatePostDialogProps {
     postCreated: (post: Post) => void
 }
 
-function CreatePostDialog({ postCreated }: CreatePostDialogProps) {
+interface PostFormElements extends HTMLFormControlsCollection {
+    title: HTMLInputElement;
+    description: HTMLInputElement;
+}
 
+interface PostFormElement extends HTMLFormElement {
+    readonly elements: PostFormElements;
+}
+
+function CreatePostDialog({ postCreated }: CreatePostDialogProps) {
     const token = localStorage.getItem('accessToken')
     const [selectedFile, setSelectedFile] = useState<File>()
 
-
-
-    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    async function handleSubmit(event: FormEvent<PostFormElement>) {
         event.preventDefault()
         const form = event.currentTarget 
 
@@ -44,14 +49,13 @@ function CreatePostDialog({ postCreated }: CreatePostDialogProps) {
             console.error(err)
             alert('erro')
         }
-        
     }
 
     return (
         <Dialog.Portal>
             <Dialog.Overlay className='bg-black/60 inset-0 fixed' />
 
-            <Dialog.Content className='fixed bg-primary py-8 px-10 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg w-[480px] shadow-lg shadow-black/25'>
+            <Dialog.Content className='fixed bg-primary py-2 px-2 sm:py-8 sm:px-10 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg md:w-[480px] shadow-lg shadow-black/25'>
                 <Dialog.Title className='text-2xl font-black text-textOnP'>Novo Post</Dialog.Title>
 
                 <form onSubmit={handleSubmit} className='flex flex-col gap-4 mt-6'>

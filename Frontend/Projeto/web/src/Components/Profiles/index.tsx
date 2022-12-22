@@ -16,8 +16,6 @@ interface Profile {
 }
 
 function Profiles() {
-    const user = localStorage.getItem('user')
-    const name = localStorage.getItem('name')
     const profileUserId = localStorage.getItem('profile') as string
     const authHeader = getAuthHeader()
 

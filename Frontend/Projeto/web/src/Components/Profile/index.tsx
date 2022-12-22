@@ -9,14 +9,6 @@ import { getAuthHeader } from "../../services/auth";
 import Dropzone from "../Dropzone";
 import Header from "../Header";
 
-// interface Profile {
-//     _id: string;
-//     name: string;
-//     followers: string[];
-//     following: string[];
-//     image: boolean;
-//     urlImage: string;
-// }
 
 function Profile() {
     const navigate = useNavigate()
@@ -40,18 +32,12 @@ function Profile() {
         getProfile()
     }, [])
 
-    console.log(profile)
-
-    // Create a reference to the hidden file input element
-    const hiddenFileInput = React.useRef(null);
+    const hiddenFileInput = React.useRef<HTMLInputElement>(null);
     
-    // Programatically click the hidden file input element
-    // when the Button component is clicked
     const handleClick = () => {
-        hiddenFileInput.current.click();
+        hiddenFileInput.current && hiddenFileInput.current.click();
     };
-    // Call a function (passed as a prop from the parent component)
-    // to handle the user-selected file 
+    
     async function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         const target = event.currentTarget as HTMLInputElement;
         const files = target.files;
@@ -59,9 +45,6 @@ function Profile() {
 
         const data = new FormData()
         data.append('file', fileUploaded)
-
-        console.log(fileUploaded)
-
 
         try {
             const response = await api.patch(`/profiles/${profileId}`, data, authHeader)
@@ -74,23 +57,15 @@ function Profile() {
         }
     };
 
-
     function handleLogout() {
         localStorage.clear()
         navigate('/')
     }
 
     return (
-       
         <div className="basis-5/6 overflow-y-auto scrool-smooth">
-            
-            {/* <header className="px-5 py-3 border-b border-lineBg flex items-center ">
-                <UserCircle size={40} weight='light' fill="" />
-                <Heading size="xs" className="ml-2">{name}</Heading>
-                <Heading  className="ml-2 text-sm">{`@${user}`}</Heading>
-                
-            </header> */}
-            <Header profileImage={profile.image} profileUrlImage={profile.urlImage} />
+    
+            <Header  profileImage={profile.image} profileUrlImage={profile.urlImage} />
 
             {Object.keys(profile).length !== 0 && (
                 <div className="flex flex-col gap-3 items-center m-auto mt-10 px-5 py-5 w-1/3 rounded-2xl bg-primaryDark text-textOnP">
@@ -103,6 +78,7 @@ function Profile() {
         
                     <input
                         type="file"
+                        accept="image/*"
                         ref={hiddenFileInput}
                         onChange={handleChange}
                         style={{display: 'none'}} 

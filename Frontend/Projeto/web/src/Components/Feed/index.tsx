@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react"
-import { UserCircle, ChatCentered, Heart } from "phosphor-react"
 import api from "../../services/api"
-import Heading from "../Heading"
-import Text from "../Text"
 import { getAuthHeader } from "../../services/auth"
 import { Post } from "../../Model/Post"
 import PostItem from "../PostItem"
@@ -14,8 +11,6 @@ interface FeedProps {
 }
 
 function Feed({posts, handleLike}: FeedProps) {
-    const user = localStorage.getItem('user')
-    const name = localStorage.getItem('name')
     const profileId = localStorage.getItem('profile')
     const authHeader = getAuthHeader()
 
@@ -37,12 +32,11 @@ function Feed({posts, handleLike}: FeedProps) {
     
     return (
         <div className="basis-5/6 overflow-y-auto scrool-smooth">
-            <Header profileImage={profile.image} profileUrlImage={profile.urlImage} />
+            <Header className="fixed top-0 left-0 right-0" profileImage={profile.image} profileUrlImage={profile.urlImage} />
 
             <main>
                 {posts && 
                     posts.slice(0).reverse().map((post: Post) => (
-                        
                        <PostItem key={post._id} post={post} handleLike={handleLike} />
                 ))}
             </main>

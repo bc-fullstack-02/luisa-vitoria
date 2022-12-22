@@ -7,6 +7,7 @@ import Home from './Pages/Home';
 import ProfilePage from './Pages/ProfilePage';
 import './main.css'
 import Friends from './Pages/Friends';
+import PostDetail from './Pages/PostDetail';
 
 function App() {
 
@@ -30,6 +31,10 @@ function App() {
     {
       path: "/friends",
       element: <Friends />
+    },
+    {
+      path: "/posts/:postId",
+      element: <PostDetail />
     }
 
   ]);

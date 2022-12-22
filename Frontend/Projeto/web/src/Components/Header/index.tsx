@@ -6,11 +6,18 @@ function Header(props: any) {
     const name = localStorage.getItem('name')
 
     return (
-        <header className="px-5 py-3 border-b border-lineBg flex items-center ">
+        <header className=" bg-lineBg px-5 py-3 border-b border-lineBg sm:flex items-center gap-2 sticky top-0 w-full hidden">
            
-            {props.profileImage ? <img src={props.profileUrlImage} className='h-12 w-12 rounded-full' /> :  <UserCircle size={48} weight='light' fill="" />}
-            <Heading size="xs" className="ml-2">{name}</Heading>
-            <Heading  className="ml-2 text-sm">{`@${user}`}</Heading>
+            {props.profileImage ?
+                <img src={props.profileUrlImage} className='h-12 w-12 rounded-full' /> 
+                :  
+                <UserCircle size={48} weight='light' fill="" />
+            }
+            <div>
+                <Heading size="xs" className="ml-2">{name}</Heading>
+                <Heading size="xxs" className="ml-2 text-sm">{`@${user}`}</Heading>
+            </div>
+            
          
         </header>
     )

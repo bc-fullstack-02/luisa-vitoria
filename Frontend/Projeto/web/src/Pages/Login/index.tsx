@@ -4,8 +4,11 @@ import AuthForm, { Auth } from "../../Components/AuthForm"
 import api from "../../services/api"
 
 interface UserToken {
-    profile: string
-    user: string
+    profile: {
+        _id: string;
+        name: string;
+    };
+    user: string;
 }
 
 function Login() {

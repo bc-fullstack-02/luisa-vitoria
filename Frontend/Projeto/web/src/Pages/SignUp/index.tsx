@@ -6,7 +6,6 @@ function SignUp() {
     const navigate = useNavigate()
 
     async function handleRegister(auth: Auth) {
-        console.log(auth)
         try {
             await api.post('/security/register', auth)
 

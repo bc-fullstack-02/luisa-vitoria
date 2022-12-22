@@ -11,12 +11,12 @@ interface MenuItemProps {
 
 function MenuItem(props: MenuItemProps) {
     return (
-        <li className="mt-5 ml-4 mr-4" >
+        <li className="md:mt-5 md:ml-4 md:mr-4" >
             <Link to={props.route}>
-                <div className="flex items-center px-4 rounded-2xl group hover:bg-background  py-1 cursor-pointer">
+                <div className="flex items-center px-3 md:px-4 rounded-2xl group hover:bg-background  py-1 cursor-pointer">
                     <Slot className=" fill-textOnP group-hover:fill-textOnS">{props.children}</Slot>
                     
-                    <Text size="lg" className="font-semibold text-textOnP  group-hover:text-textOnS ml-4">{props.menuTitle}</Text>
+                    <Text size="lg" className="font-semibold text-textOnP  group-hover:text-textOnS ml-4 md:block hidden">{props.menuTitle}</Text>
                 </div>
             </Link>
         </li>

@@ -25,9 +25,8 @@ function Menu(props: MenuProps) {
         <>
             <NavBar>
                 <Dialog.Root open={open} onOpenChange={setOpen}>
-                <CreatePostButton />
-
-                <CreatePostDialog postCreated={postCreated} />
+                    <CreatePostButton />
+                    <CreatePostDialog postCreated={postCreated} />
                 </Dialog.Root>
             </NavBar> 
         </>
