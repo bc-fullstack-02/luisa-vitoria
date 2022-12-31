@@ -1,6 +1,7 @@
 
 import React, {useState, useContext} from 'react';
-import { View, Text, Image } from 'react-native';
+import { Text, View, Image, TouchableOpacity} from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 import { UserCircle } from 'phosphor-react-native'
 import { Context as PostContext } from '../../context/PostContext';
 import { Profile } from '../../@types/profile';
@@ -10,6 +11,7 @@ import Spacer from '../../components/Spacer';
 import Button from '../../components/Button';
 
 import { styles } from './styles';
+
 
 interface CreatePostProps {
   user: string | null;
@@ -23,6 +25,48 @@ const CreatePost = ({ user, name, profileDetails }: CreatePostProps) => {
 
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
+  const [photo, setPhoto] = useState(null);
+  const [photoShow, setPhotoShow] = useState('');
+  let formData = new FormData();
+
+  const takePhotoAndUpload = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: false,
+        aspect: [4, 3],
+        quality: 1,
+    });
+
+    if (result.canceled) {
+      return;
+    }
+  
+    let localUri = result.assets[0].uri;
+    setPhotoShow(localUri);
+    let filename = localUri.split('/').pop();
+
+    let type;
+    if(filename) {
+      let match = /\.(\w+)$/.exec(filename);
+      type = match ? `image/${match[1]}` : `image`;
+    }
+
+    if(result.assets !== null) {
+      if(filename && type && localUri) {
+        setPhoto(JSON.parse(JSON.stringify({ uri: localUri, name: filename, type })))
+      }
+    }
+    
+  }
+
+  if(photo){
+    formData.append('file', photo)
+    formData.append('title', title)
+    formData.append('description', description )
+  } else {
+    formData.append('title', title)
+    formData.append('description', description )
+  }
+  console.log(formData)
 
   return (
     <View style={styles.container}>
@@ -57,8 +101,24 @@ const CreatePost = ({ user, name, profileDetails }: CreatePostProps) => {
         </Input.Root>
       </Spacer>
 
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        activeOpacity={0.5}
+        onPress={takePhotoAndUpload}
+      >
+        <Text style={styles.buttonTextStyle}>Adicionar imagem</Text>
+      </TouchableOpacity>
+
+      <View style={{alignItems:'center'}}>
+        {photoShow && <Image
+            source={{ uri: photoShow }}
+            style={styles.post_image}
+          /> 
+        }
+      </View>
+
       <Spacer>
-        <Button onPress={() => { createPost && createPost({ title, description})}} title='Postar' />
+        <Button onPress={() => { createPost && createPost(formData)}} title='Postar' />
       </Spacer>
     </View>
   )

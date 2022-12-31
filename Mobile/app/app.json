@@ -23,7 +23,7 @@
       "infoPlist": {
         "NSAppTransportSecurity": {
 		      "NSAllowsArbitraryLoads": true
-	      }
+	    }
       }
     },
     "android": {

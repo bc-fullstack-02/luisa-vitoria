@@ -12,7 +12,7 @@ interface iPostContext {
     getPosts?: () => void;
     likePost?: ({postId}: {postId: string}) => void;
     unlikePost?: ({postId}: {postId: string}) => void;
-    createPost?: ({title, description}: {title: string, description: string}) => void;
+    createPost?: (formData: any) => void;
 }
 const defaultValue = { 
     posts: [], 
@@ -93,11 +93,11 @@ const Provider = ({ children }: { children: ReactNode}) => {
             console.error(err)
         }
     }
-
-    const createPost = async({ title, description }: {title: string, description: string}) => {
+//{ title, description, image }: {title: string, description: string, image?: string}
+    const createPost = async(formData: any) => {
         try {
             const authHeader = await getAuthHeader()
-            const response = await api.post('/posts', { title, description}, authHeader)
+            const response = await api.post('/posts', formData, authHeader)
 
             dispatch({ type: 'create_post', payload: response.data })
             navigate('Home')
