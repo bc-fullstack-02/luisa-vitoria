@@ -12,7 +12,6 @@ import Button from '../../components/Button';
 
 import { styles } from './styles';
 
-
 interface CreatePostProps {
   user: string | null;
   name: string | null;
@@ -66,7 +65,7 @@ const CreatePost = ({ user, name, profileDetails }: CreatePostProps) => {
     formData.append('title', title)
     formData.append('description', description )
   }
-  console.log(formData)
+
 
   return (
     <View style={styles.container}>

@@ -12,7 +12,7 @@ interface iAuthContext {
     name: string | null;
     isLoading: boolean;
     errorMessage: string | null;
-    login?: () => void;
+    login?: (auth: Auth) => {};
     register?: () => void;
     tryLocalLogin?: () => void;
     logout?: () => void;

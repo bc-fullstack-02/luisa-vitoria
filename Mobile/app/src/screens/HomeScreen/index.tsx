@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { styles } from './styles';
 import { View, Text, TouchableOpacity, Image} from 'react-native';
@@ -11,10 +12,11 @@ interface HomeProps {
   navigation: NativeStackNavigationProp<any, any>;
   user: string | null;
   name: string | null;
-  profileDetails: Profile
+  profileDetails: Profile;
+  screenName: string;
 }
 
-const Home = ({navigation, user, name, profileDetails}: HomeProps) => {
+const HomeScreen = ({navigation, user, name, profileDetails, screenName}: HomeProps) => {
   
   function handlePencilPress() {
     navigation.navigate("CreatePost")
@@ -24,20 +26,25 @@ const Home = ({navigation, user, name, profileDetails}: HomeProps) => {
     <View style={styles.container}>
       <View style={styles.heading}>
         {Object.keys(profileDetails).length !== 0 && profileDetails.image ? <Image source={{uri: profileDetails.urlImage.replace('localhost','192.168.0.12')}} style={styles.profile_image} /> : <UserCircle size={48} weight='thin' color='white'/> }
+
         <Text style={styles.userNameText}>{name}</Text>
+
         {user && <Text style={styles.userUserText}>{`@${user}`}</Text> }
+
         <View style={{flex: 1}}></View>
+
         <TouchableOpacity onPress={handlePencilPress}>
           <NotePencil color='white' weight='thin' size={40} />
         </TouchableOpacity>
+        
       </View>
 
       <View style={styles.content}>
-        <Feed />
+        <Feed screenName={screenName} navigation={navigation} />
       </View>
       
     </View>
   )
 }
 
-export default Home;
+export default HomeScreen;

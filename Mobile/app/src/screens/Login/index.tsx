@@ -22,21 +22,29 @@ const Login = ({ navigation }: LoginProps) => {
 
   return (
     <>
-      <AuthForm 
-        formTitle='Faça login e comece a usar!'
-        submitFormButtonText='Entrar'
-        submitFormButtonAction={login}
-      />
-      <TouchableOpacity onPress={handleRegisterClick}>
-        <Text style={styles.link}>Não possui conta? Crie uma agora!</Text>
-      </TouchableOpacity>
-      {errorMessage && (
-        <Spacer>
-          <Text style={styles.errorMessage}>{errorMessage}</Text>
-        </Spacer>
+      {login && (
+        <>
+          <AuthForm 
+          formTitle='Faça login e comece a usar!'
+          submitFormButtonText='Entrar'
+          submitFormButtonAction={login}
+          />
+
+          <TouchableOpacity onPress={handleRegisterClick}>
+            <Text style={styles.link}>Não possui conta? Crie uma agora!</Text>
+          </TouchableOpacity>
+
+          {errorMessage && (
+            <Spacer>
+              <Text style={styles.errorMessage}>{errorMessage}</Text>
+            </Spacer>
+          )}
+           
+        </>
+
       )}
    </>
-  )
+  )  
 }
 
 export default Login;

@@ -2,7 +2,9 @@
 import React from 'react';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import api from '../../services/api';
-import AuthForm, { Auth } from '../../components/AuthForm';
+import AuthForm from '../../components/AuthForm';
+import { Auth } from '../../@types/auth';
+
 import { Text, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 

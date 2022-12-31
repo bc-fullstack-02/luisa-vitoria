@@ -20,11 +20,12 @@ import {
 import Login from './src/screens/Login';
 import SignUp from './src/screens/SignUp';
 import Loading from './src/components/Loading';
-import HomeNavigationScreen from './src/screens/HomeNavigationScreen';
 import Profile from './src/screens/Profile';
 import Friends from './src/screens/Friends';
 import { THEME } from './src/theme';
 import { navigationRef } from './RootNavigation';
+
+import MainNavigator from './src/screens/MainNavigator';
 
 const MyTheme = {
   ...DefaultTheme,
@@ -71,8 +72,7 @@ function App() {
               screenOptions={({route}) => ({
                 tabBarIcon: ({ color, size }) => {
                   switch(route.name) {
-                    case 'HomeNavigation':
-                      
+                    case 'MainNavigator':
                       return (
                         <HouseSimple weight='fill' size={size} color={color}  />
                       )
@@ -88,14 +88,11 @@ function App() {
                 },
                 headerShown: false,
                 tabBarShowLabel: false,
-                // tabBarStyle: {
-                //   backgroundColor: THEME.COLORS.PRIMARYDARK,
-                // },
                 tabBarInactiveTintColor: THEME.COLORS.BLACK,
                 tabBarActiveTintColor: THEME.COLORS.SECONDARY,
               })}
             >
-              <Tab.Screen name="HomeNavigation" component={HomeNavigationScreen} options={{
+              <Tab.Screen name="MainNavigator" component={MainNavigator} options={{ 
                 unmountOnBlur: true,
               }} />
               <Tab.Screen name="Friends" component={Friends} options={{
