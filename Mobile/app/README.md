@@ -35,18 +35,17 @@ O projeto é uma rede social, onde o usuário pode postar fotos ou textos e inte
 - ##### Tela de cadastro:
 ![Tela de cadastro](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Mobile/app/assets/images/cadastro.jpg)
 
-
 - ##### Tela de login:
 ![Tela de login](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Mobile/app/assets/images/login.jpg)
 
 - ##### Tela de home/feed:
-![Tela de home](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Mobile/app/assets/images/feed.jpeg)
+<img src="https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Mobile/app/assets/images/feed.jpeg" width="300" height="600">
 
 - ##### Tela de perfil:
-![Tela de perfil](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Mobile/app/assets/images/profile.jpeg)
+<img src="https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Mobile/app/assets/images/profile.jpeg" width="300" height="600">
 
 - ##### Tela de amigos:
-![Tela de amigos](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Mobile/app/assets/images/friends.jpeg)
+<img src="https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Mobile/app/assets/images/friends.jpeg" width="300" height="600">
 
 - ##### Tela de novo post:
-![Tela de Novo Post](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Mobile/app/assets/images/newpost.jpeg)
+<img src="https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Mobile/app/assets/images/newpost.jpeg" width="300" height="600">
