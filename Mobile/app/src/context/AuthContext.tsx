@@ -53,7 +53,7 @@ const Provider = ({ children }: { children: ReactNode }) => {
     const login = async({user, password}: Auth) => {
         try {
             const response = await api.post('/security/login', {user, password})
-            
+    
             const { accessToken } = response.data
             const decodedToken = jwt_decode(accessToken) as UserToken
             const userUser = decodedToken.user
