@@ -1,4 +1,4 @@
-<h1 align="center">  Mobile -  Sysmap Parrot </h1>
+<h1 align="center"> :iphone: Mobile -  Sysmap Parrot </h1>
 <h4 align="center"> Projeto mobile para a rede social Sysmap Parrot </h4>
 
 
@@ -33,17 +33,20 @@ O projeto é uma rede social, onde o usuário pode postar fotos ou textos e inte
 
 
 - ##### Tela de cadastro:
-![Tela de cadastro](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Frontend/Projeto/web/src/assets/cadastro.png)
+![Tela de cadastro](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Mobile/app/assets/images/cadastro.jpg)
 
 
 - ##### Tela de login:
-![Tela de login](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Frontend/Projeto/web/src/assets/login.png)
+![Tela de login](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Mobile/app/assets/images/login.jpg)
 
 - ##### Tela de home/feed:
-![Tela de home](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Frontend/Projeto/web/src/assets/feed.png)
+![Tela de home](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Mobile/app/assets/images/feed.jpeg)
 
 - ##### Tela de perfil:
-![Tela de perfil](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Frontend/Projeto/web/src/assets/perfil.png)
+![Tela de perfil](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Mobile/app/assets/images/profile.jpeg)
 
 - ##### Tela de amigos:
-![Tela de amigos](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Frontend/Projeto/web/src/assets/amigos.png)
+![Tela de amigos](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Mobile/app/assets/images/friends.jpeg)
+
+- ##### Tela de novo post:
+![Tela de Novo Post](https://github.com/bc-fullstack-02/luisa-vitoria/blob/main/Mobile/app/assets/images/newpost.jpeg)
