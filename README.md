@@ -6,3 +6,6 @@
 
 ## :high_brightness: Frontend
 :heavy_check_mark: Projeto finalizado: [Frontend](https://github.com/bc-fullstack-02/luisa-vitoria/tree/main/Frontend/Projeto/web)
+
+## :iphone: Mobile
+:heavy_check_mark: Projeto finalizado: [Mobile](https://github.com/bc-fullstack-02/luisa-vitoria/tree/main/Mobile/app)
